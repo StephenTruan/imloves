@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.binarywang:weixin-java-common:2.7.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.binarywang/weixin-java-common/2.7.0/4318959b9e1bddaa8a860d851339ca78ce700f0/weixin-java-common-2.7.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.binarywang/weixin-java-common/2.7.0/3e048eb421ad8209922763ea437183f419ae9a58/weixin-java-common-2.7.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
