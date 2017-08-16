@@ -26,5 +26,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.projectlombok:lombok')
     compile('com.github.binarywang:weixin-java-mp:2.7.0')
+    compile('org.springframework.boot:spring-boot-configuration-processor')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+compileJava.dependsOn(processResources)

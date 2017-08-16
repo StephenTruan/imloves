@@ -26,11 +26,12 @@ public class WechatController {
     @Autowired
     private WxMpService wxMpService;
 
-    @GetMapping("/authorize")
-    public String authorize(@RequestParam("returnUrl") String returnUrl) {
+    @GetMapping("/qrAuthorize")
+    public String authorize() {
 
+        String returnUrl = "http://www.yangmb.top";
         String url = "http://imloves.natapp1.cc/wechat/userInfo";
-        String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_USER_INFO, URLEncoder.encode(returnUrl));
+        String redirectUrl = wxMpService.buildQrConnectUrl(url, WxConsts.QRCONNECT_SCOPE_SNSAPI_LOGIN, URLEncoder.encode(returnUrl));
 
         return "redirect:" + redirectUrl;
     }
@@ -47,7 +48,7 @@ public class WechatController {
             e.printStackTrace();
         }
         String openId = wxMpOAuth2AccessToken.getOpenId();
-
-        return "redirect:" + returnUrl + "?openid=" + openId;
+        log.info(openId);
+        return "redirect:" + returnUrl;
     }
 }
