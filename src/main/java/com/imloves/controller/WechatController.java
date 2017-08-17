@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +27,12 @@ public class WechatController {
     @Autowired
     private WxMpService wxMpService;
 
-    @GetMapping("/qrAuthorize")
+    @GetMapping("/authorize")
     public String authorize() {
 
         String returnUrl = "http://www.yangmb.top";
         String url = "http://imloves.natapp1.cc/wechat/userInfo";
-        String redirectUrl = wxMpService.buildQrConnectUrl(url, WxConsts.QRCONNECT_SCOPE_SNSAPI_LOGIN, URLEncoder.encode(returnUrl));
+        String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_USER_INFO, URLEncoder.encode(returnUrl));
 
         return "redirect:" + redirectUrl;
     }
@@ -40,15 +41,19 @@ public class WechatController {
     public String userIfo(@RequestParam("code") String code,
                           @RequestParam("state") String returnUrl) {
 
-        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
+        WxMpUser wxMpUser = null;
         try {
             wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
+            wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
         } catch (WxErrorException e) {
             log.error("【微信网页授权】{}", e);
             e.printStackTrace();
         }
-        String openId = wxMpOAuth2AccessToken.getOpenId();
-        log.info(openId);
+        log.info("customerName:{}", wxMpUser.getNickname());
+        log.info("customerSex:{}", wxMpUser.getSex());
+        log.info("customerCity:{}", wxMpUser.getCity());
+        log.info("customerHeadImageUrl:{}", wxMpUser.getHeadImgUrl());
         return "redirect:" + returnUrl;
     }
 }
