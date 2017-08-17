@@ -1,3 +1,21 @@
 wechat:
   my-app-id: wx4d4eec06d12c0137
   my-app-secret: 76c1b4d54396e3ab284a3d5d1c7037d9
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/imloves
+
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+server:
+  port: 8080
