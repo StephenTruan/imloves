@@ -2,6 +2,7 @@ package com.imloves.service;
 
 import com.imloves.model.Customer;
 import com.imloves.repository.CustomerRepository;
+import com.imloves.util.EncryptionUtil;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class WechatServiceImpl implements WechatService {
             customer = new Customer();
             customer.setNickName(wxMpUser.getNickname());
             customer.setOpenId(wxMpUser.getOpenId());
-            customer.setPassword("000000");
+            customer.setPassword(EncryptionUtil.enctyption("000000", EncryptionUtil.MD5));
             if (wxMpUser.getSex() == "男") {
                 customer.setSex(1);
             } else if (wxMpUser.getSex() == "女") {
