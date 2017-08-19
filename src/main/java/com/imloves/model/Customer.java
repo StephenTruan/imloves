@@ -1,9 +1,10 @@
 package com.imloves.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by wujianchuan
@@ -15,15 +16,18 @@ public class Customer implements Serializable {
     private static final long serialVersionUID = 3491866028426887110L;
     @Id
     @GeneratedValue
-    private Long uuid;
+    private Long customerId;
+    private String openId;
     private String nickName;
     private String password;
-    private String openId;
+    private String phone;
     private Integer sex;
     private String city;
     private Integer state;
     private String createTime;
     private String updateTime;
+    @Transient
+    private List<Role> roles;
 
     public Customer() {
     }
@@ -37,12 +41,12 @@ public class Customer implements Serializable {
         this.state = state;
     }
 
-    public Long getUuid() {
-        return uuid;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setUuid(Long uuid) {
-        this.uuid = uuid;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public Integer getSex() {
@@ -109,18 +113,36 @@ public class Customer implements Serializable {
         this.city = city;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
-                "uuid=" + uuid +
+                "customerId=" + customerId +
+                ", openId='" + openId + '\'' +
                 ", nickName='" + nickName + '\'' +
                 ", password='" + password + '\'' +
-                ", openId='" + openId + '\'' +
+                ", phone='" + phone + '\'' +
                 ", sex=" + sex +
                 ", city='" + city + '\'' +
                 ", state=" + state +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
+                ", createTime='" + createTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 }

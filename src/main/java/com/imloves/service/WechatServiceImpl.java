@@ -32,6 +32,7 @@ public class WechatServiceImpl implements WechatService {
             } else if ("女".equals(wxMpUser.getSex())) {
                 customer.setSex(2);
             }
+            customer.setState(1);
             customer.setCity(wxMpUser.getCity());
             customerRepository.save(customer);
         }
