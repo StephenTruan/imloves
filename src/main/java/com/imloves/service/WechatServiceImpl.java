@@ -27,9 +27,9 @@ public class WechatServiceImpl implements WechatService {
             customer.setNickName(wxMpUser.getNickname());
             customer.setOpenId(wxMpUser.getOpenId());
             customer.setPassword(EncryptionUtil.enctyption("000000", EncryptionUtil.MD5));
-            if (wxMpUser.getSex() == "男") {
+            if ("男".equals(wxMpUser.getSex())) {
                 customer.setSex(1);
-            } else if (wxMpUser.getSex() == "女") {
+            } else if ("女".equals(wxMpUser.getSex())) {
                 customer.setSex(2);
             }
             customer.setCity(wxMpUser.getCity());
