@@ -50,10 +50,7 @@ public class WechatController {
             log.error("【微信网页授权】{}", e);
             e.printStackTrace();
         }
-        log.info("customerName:{}", wxMpUser.getNickname());
-        log.info("customerSex:{}", wxMpUser.getSex());
-        log.info("customerCity:{}", wxMpUser.getCity());
-        log.info("customerHeadImageUrl:{}", wxMpUser.getHeadImgUrl());
+
         return "redirect:" + returnUrl;
     }
 }

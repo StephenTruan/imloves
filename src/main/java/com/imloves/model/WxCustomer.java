@@ -21,8 +21,20 @@ public class WxCustomer implements Serializable {
     private Integer sex;
     private String city;
     private Integer state;
-    private Long createTime;
-    private Long updateTime;
+    private String createTime;
+    private String updateTime;
+
+    public WxCustomer() {
+    }
+
+    public WxCustomer(String nickName, String password, String openId, Integer sex, String city, Integer state) {
+        this.nickName = nickName;
+        this.password = password;
+        this.openId = openId;
+        this.sex = sex;
+        this.city = city;
+        this.state = state;
+    }
 
     public Long getUuid() {
         return uuid;
@@ -56,19 +68,19 @@ public class WxCustomer implements Serializable {
         this.state = state;
     }
 
-    public Long getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Long createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Long getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Long updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -94,5 +106,20 @@ public class WxCustomer implements Serializable {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Override
+    public String toString() {
+        return "WxCustomer{" +
+                "uuid=" + uuid +
+                ", nickName='" + nickName + '\'' +
+                ", password='" + password + '\'' +
+                ", openId='" + openId + '\'' +
+                ", sex=" + sex +
+                ", city='" + city + '\'' +
+                ", state=" + state +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

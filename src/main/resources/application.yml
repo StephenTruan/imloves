@@ -7,13 +7,13 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root
-    url: jdbc:mysql://127.0.0.1:3306/imloves
+    url: jdbc:mysql://127.0.0.1:3306/imloves?characterEncoding=utf-8
 
   jpa:
     database: MYSQL
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
