@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 2017/8/17 21:26
  */
 @Entity
-public class WxCustomer implements Serializable {
+public class Customer implements Serializable {
 
     @Id
     @GeneratedValue
@@ -24,10 +24,10 @@ public class WxCustomer implements Serializable {
     private String createTime;
     private String updateTime;
 
-    public WxCustomer() {
+    public Customer() {
     }
 
-    public WxCustomer(String nickName, String password, String openId, Integer sex, String city, Integer state) {
+    public Customer(String nickName, String password, String openId, Integer sex, String city, Integer state) {
         this.nickName = nickName;
         this.password = password;
         this.openId = openId;
@@ -110,7 +110,7 @@ public class WxCustomer implements Serializable {
 
     @Override
     public String toString() {
-        return "WxCustomer{" +
+        return "Customer{" +
                 "uuid=" + uuid +
                 ", nickName='" + nickName + '\'' +
                 ", password='" + password + '\'' +

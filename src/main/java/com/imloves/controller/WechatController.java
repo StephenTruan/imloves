@@ -1,5 +1,6 @@
 package com.imloves.controller;
 
+import com.imloves.service.WechatService;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -27,6 +28,9 @@ public class WechatController {
     @Autowired
     private WxMpService wxMpService;
 
+    @Autowired
+    private WechatService wechatService;
+
     @GetMapping("/authorize")
     public String authorize() {
 
@@ -41,11 +45,11 @@ public class WechatController {
     public String userIfo(@RequestParam("code") String code,
                           @RequestParam("state") String returnUrl) {
 
-        WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
-        WxMpUser wxMpUser = null;
         try {
-            wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
-            wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
+
+            WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
+            WxMpUser wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
+            wechatService.wechatCustomerPersist(wxMpUser);
         } catch (WxErrorException e) {
             log.error("【微信网页授权】{}", e);
             e.printStackTrace();
