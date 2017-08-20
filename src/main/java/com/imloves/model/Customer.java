@@ -1,8 +1,9 @@
 package com.imloves.model;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.List;
 

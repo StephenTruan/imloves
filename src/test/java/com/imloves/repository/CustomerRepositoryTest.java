@@ -23,7 +23,7 @@ public class CustomerRepositoryTest {
 
         Customer customer = new Customer("测试账号", "123456", "xdfk#r6lsicla", 1, "北京", 1);
         customerRepository.save(customer);
-        System.out.println(customerRepository.findOne(customer.getUuid()));
+        System.out.println(customerRepository.findOne(customer.getCustomerId()));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -31,7 +31,7 @@ public class CustomerRepositoryTest {
         }
         customer.setPassword("000000");
         customerRepository.save(customer);
-        System.out.println(customerRepository.findOne(customer.getUuid()));
+        System.out.println(customerRepository.findOne(customer.getCustomerId()));
         customerRepository.delete(customer);
     }
 
