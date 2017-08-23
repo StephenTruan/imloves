@@ -2,6 +2,17 @@ wechat:
   my-app-id: wx4d4eec06d12c0137
   my-app-secret: 76c1b4d54396e3ab284a3d5d1c7037d9
 
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 604800
+  tokenHead: "Bearer "
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+      register: "auth/register"
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
