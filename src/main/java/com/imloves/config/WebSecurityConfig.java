@@ -1,5 +1,9 @@
 package com.imloves.config;
 
+import com.imloves.repository.SysRoleRepository;
+import com.imloves.repository.SysUserRepository;
+import com.imloves.repository.SysUserRoleRepository;
+import com.imloves.service.JwtUserDetailServiceImpl;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -20,13 +24,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    SysUserRoleRepository sysUserRoleRepository;
+
+    @Autowired
+    SysRoleRepository sysRoleRepository;
+
+    @Autowired
+    SysUserRepository sysUserRepository;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth
-                .jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("SELECT nick_name, password, state FROM customer WHERE nick_name = ?")
-                .authoritiesByUsernameQuery("SELECT c.nick_name, r.role_name FROM customer_role cr LEFT JOIN customer c ON c.customer_id = cr.customer_id RIGHT JOIN role r ON r.role_id = cr.role_id WHERE c.nick_name = ?");
+        auth.userDetailsService(new JwtUserDetailServiceImpl(sysUserRepository, sysRoleRepository, sysUserRoleRepository));
     }
 
     @Override
@@ -38,6 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().and()
                 .rememberMe().and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/**").authenticated();
+                .antMatchers(HttpMethod.GET, "/home").authenticated();
     }
 }

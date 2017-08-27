@@ -26,4 +26,11 @@ public class SysUserRoleRepositoryTest {
         List<SysUserRole> sysUserRoles = repository.findAll();
         sysUserRoles.forEach(sysUserRole -> System.out.println(sysUserRole.getRoleId()));
     }
+
+    @Test
+    public void findSysUserRoleByUserId() {
+
+        List<SysUserRole> sysUserRoles = repository.findSysUserRoleByUserId(1l);
+        sysUserRoles.forEach(sysUserRole -> System.out.println(sysUserRole.getRoleId()));
+    }
 }

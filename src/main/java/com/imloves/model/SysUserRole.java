@@ -13,7 +13,7 @@ public class SysUserRole implements Serializable {
     @GeneratedValue
     private Long id;
     private Long userId;
-    private Long roleId;
+    private Integer roleId;
 
     public Long getId() {
         return id;
@@ -31,11 +31,11 @@ public class SysUserRole implements Serializable {
         this.userId = userId;
     }
 
-    public Long getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 }
