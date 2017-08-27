@@ -1,22 +1,32 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : MINE
-Source Server Version : 50717
-Source Host           : localhost:3306
+Source Server         : MyDB
+Source Server Version : 50634
+Source Host           : 127.0.0.1:3306
 Source Database       : imloves
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-08-19 22:27:47
+Date: 2017-08-27 19:49:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for sysUser
+-- Table structure for sys_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role`;
+CREATE TABLE `sys_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Table structure for sys_user
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
@@ -31,25 +41,17 @@ CREATE TABLE `sys_user` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `phone`(`phone`)
+  UNIQUE KEY `phone` (`phone`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
--- Table structure for customer_role
+-- Table structure for sys_user_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '中间表数据编号',
   `USER_ID` int(11) NOT NULL COMMENT '用户数据编号',
   `ROLE_ID` int(11) NOT NULL COMMENT '角色数据编号',
-  PRIMARY KEY (`USER_ID`,`ROLE_ID`)
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `USER_ID` (`USER_ID`,`ROLE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- ----------------------------
--- Table structure for role
--- ----------------------------
-DROP TABLE IF EXISTS `sys_role`;
-CREATE TABLE `sys_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

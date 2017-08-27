@@ -22,12 +22,12 @@ public class SysUserRepositoryTest {
     @Test
     public void findByOpenId() throws Exception {
 
-        log.info(sysUserRepository.findByOpenId("123456789").getUsername());
+        log.info(String.valueOf(sysUserRepository.findByOpenId("123456789")));
     }
 
     @Test
     public void findByPhone() throws Exception {
 
-        log.info(sysUserRepository.findByPhone("18231926271").getUsername());
+        log.info(String.valueOf(sysUserRepository.findByPhone("18231926271")));
     }
 }
