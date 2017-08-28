@@ -1,4 +1,4 @@
-package com.imloves.model;
+package com.imloves.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

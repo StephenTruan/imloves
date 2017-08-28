@@ -1,6 +1,5 @@
-package com.imloves.service;
+package com.imloves.security;
 
-import com.imloves.factory.JwtUserFactory;
 import com.imloves.model.SysRole;
 import com.imloves.model.SysUser;
 import com.imloves.model.SysUserRole;

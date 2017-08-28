@@ -1,9 +1,9 @@
-package com.imloves.config;
+package com.imloves.security;
 
 import com.imloves.repository.SysRoleRepository;
 import com.imloves.repository.SysUserRepository;
 import com.imloves.repository.SysUserRoleRepository;
-import com.imloves.service.JwtUserDetailServiceImpl;
+import com.imloves.security.JwtUserDetailServiceImpl;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

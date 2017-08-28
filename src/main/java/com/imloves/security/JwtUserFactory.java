@@ -1,6 +1,5 @@
-package com.imloves.factory;
+package com.imloves.security;
 
-import com.imloves.model.JwtUser;
 import com.imloves.model.SysRole;
 import com.imloves.model.SysUser;
 import org.springframework.security.core.GrantedAuthority;
