@@ -6,12 +6,7 @@ jwt:
   header: Authorization
   secret: 18231926271
   expiration: 604800
-  tokenHead: "Bearer "
-  route:
-    authentication:
-      path: auth
-      refresh: refresh
-      register: "auth/register"
+  token-head: "Bearer "
 
 spring:
   datasource:

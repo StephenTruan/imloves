@@ -48,7 +48,7 @@ public class JwtTokenUtil implements Serializable {
         return refreshedToken;
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    Boolean validateToken(String token, UserDetails userDetails) {
         JwtUser user = (JwtUser) userDetails;
         final String username = getUsernameFromToken(token);
         final Date created = getCreatedDateFromToken(token);
@@ -58,12 +58,18 @@ public class JwtTokenUtil implements Serializable {
                         && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate()));
     }
 
-    String generateToken(Map<String, Object> claims) {
+    private String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
                 .signWith(SignatureAlgorithm.HS512, jwtAccountConfig.getSecret())
                 .compact();
+    }
+
+    public Boolean canTokenBeRefreshed(String token, Date lastPasswordReset) {
+        final Date created = getCreatedDateFromToken(token);
+        return !isCreatedBeforeLastPasswordReset(created, lastPasswordReset)
+                && !isTokenExpired(token);
     }
 
     private Date generateExpirationDate() {

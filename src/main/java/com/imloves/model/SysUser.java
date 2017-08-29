@@ -1,5 +1,7 @@
 package com.imloves.model;
 
+import lombok.AllArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,6 +15,7 @@ import java.util.List;
  * 2017/8/17 21:26
  */
 @Entity
+@AllArgsConstructor
 public class SysUser implements Serializable {
 
     private static final long serialVersionUID = 3491866028426887110L;
@@ -29,22 +32,9 @@ public class SysUser implements Serializable {
     private Date createTime;
     private Date updateTime;
     @Transient
-    private List<SysRole> roles;
+    private List<String> roles;
 
     public SysUser() {
-    }
-
-    public SysUser(String openId, String username, String password, String phone, Integer sex, String city, Integer state, Date createTime, Date updateTime, List<SysRole> roles) {
-        this.openId = openId;
-        this.username = username;
-        this.password = password;
-        this.phone = phone;
-        this.sex = sex;
-        this.city = city;
-        this.state = state;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-        this.roles = roles;
     }
 
     public Long getId() {
@@ -127,11 +117,11 @@ public class SysUser implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public List<SysRole> getRoles() {
+    public List<String> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<SysRole> roles) {
+    public void setRoles(List<String> roles) {
         this.roles = roles;
     }
 }

@@ -1,16 +1,13 @@
 package com.imloves.security;
 
-import com.imloves.model.SysRole;
 import com.imloves.model.SysUser;
-import com.imloves.model.SysUserRole;
-import com.imloves.repository.SysRoleRepository;
 import com.imloves.repository.SysUserRepository;
-import com.imloves.repository.SysUserRoleRepository;
+import com.imloves.util.RoleUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,27 +17,20 @@ public class JwtUserDetailServiceImpl implements UserDetailsService {
 
     private final SysUserRepository sysUserRepository;
 
-    private final SysRoleRepository sysRoleRepository;
+    @Autowired
+    private RoleUtil roleUtil;
 
-    private final SysUserRoleRepository sysUserRoleRepository;
-
-    JwtUserDetailServiceImpl(SysUserRepository sysUserRepository, SysRoleRepository sysRoleRepository, SysUserRoleRepository sysUserRoleRepository) {
+    JwtUserDetailServiceImpl(SysUserRepository sysUserRepository) {
         this.sysUserRepository = sysUserRepository;
-        this.sysRoleRepository = sysRoleRepository;
-        this.sysUserRoleRepository = sysUserRoleRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUser user = sysUserRepository.findSysUserByUsername(username);
+        SysUser user = sysUserRepository.findByUsername(username);
         if (user == null)
             throw new UsernameNotFoundException("用户名不存在");
-        List<SysUserRole> sysUserRoles = sysUserRoleRepository.findSysUserRoleByUserId(user.getId());
-        List<Integer> roleIds = new ArrayList<>();
-        List<SysRole> sysRoles;
-        sysUserRoles.forEach(sysUserRole -> roleIds.add(sysUserRole.getRoleId()));
-        sysRoles = sysRoleRepository.findSysRolesByIdIn(roleIds);
-        user.setRoles(sysRoles);
+        List<String> roleNames = roleUtil.getRoleNamesByUser(user);
+        user.setRoles(roleNames);
         return JwtUserFactory.create(user);
     }
 }

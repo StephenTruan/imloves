@@ -15,5 +15,5 @@ public interface SysUserRepository extends JpaRepository<SysUser, Long> {
 
     SysUser findByPhone(String phone);
 
-    SysUser findSysUserByUsername(String username);
+    SysUser findByUsername(String username);
 }

@@ -1,9 +1,6 @@
 package com.imloves.security;
 
-import com.imloves.repository.SysRoleRepository;
 import com.imloves.repository.SysUserRepository;
-import com.imloves.repository.SysUserRoleRepository;
-import com.imloves.security.JwtUserDetailServiceImpl;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -35,17 +32,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     DataSource dataSource;
 
     @Autowired
-    SysUserRoleRepository sysUserRoleRepository;
-
-    @Autowired
-    SysRoleRepository sysRoleRepository;
-
-    @Autowired
     SysUserRepository sysUserRepository;
 
     @Bean
     UserDetailsService customUserService() {
-        return new JwtUserDetailServiceImpl(sysUserRepository, sysRoleRepository, sysUserRoleRepository);
+        return new JwtUserDetailServiceImpl(sysUserRepository);
     }
 
     @Bean
@@ -72,11 +63,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .formLogin().and()
-                .httpBasic().and()
                 .rememberMe().and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/home").authenticated();
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/",
+                        "/*.html",
+                        "/favicon.ico",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js"
+                ).permitAll()
+                .antMatchers("/auth/**", "/pdf/**", "/xls/**").permitAll()
+                .anyRequest().authenticated();
 
         http
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);

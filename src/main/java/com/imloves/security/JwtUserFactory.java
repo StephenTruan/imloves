@@ -1,6 +1,5 @@
 package com.imloves.security;
 
-import com.imloves.model.SysRole;
 import com.imloves.model.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,18 +21,14 @@ public final class JwtUserFactory {
                 sysUser.getId(),
                 sysUser.getUsername(),
                 sysUser.getPassword(),
-                map2GrantedAuthorities(sysUser.getRoles()),
+                mapToGrantedAuthorities(sysUser.getRoles()),
                 sysUser.getUpdateTime()
         );
     }
 
-    private static List<GrantedAuthority> map2GrantedAuthorities(List<SysRole> sysRoles) {
-        return sysRoles.stream()
-                .map(sysRole -> role2SimpleGrantedAuthority(sysRole))
+    private static List<GrantedAuthority> mapToGrantedAuthorities(List<String> authorities) {
+        return authorities.stream()
+                .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-    }
-
-    private static SimpleGrantedAuthority role2SimpleGrantedAuthority(SysRole sysRole) {
-        return new SimpleGrantedAuthority(sysRole.getName());
     }
 }
