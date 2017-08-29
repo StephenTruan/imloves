@@ -7,21 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by gaowenfeng on 2017/2/5.
  */
+
+@Service
 public class JwtUserDetailServiceImpl implements UserDetailsService {
 
     private final SysUserRepository sysUserRepository;
 
-    @Autowired
-    private RoleUtil roleUtil;
+    private final RoleUtil roleUtil;
 
-    JwtUserDetailServiceImpl(SysUserRepository sysUserRepository) {
+    JwtUserDetailServiceImpl(SysUserRepository sysUserRepository, RoleUtil roleUtil) {
         this.sysUserRepository = sysUserRepository;
+        this.roleUtil = roleUtil;
     }
 
     @Override

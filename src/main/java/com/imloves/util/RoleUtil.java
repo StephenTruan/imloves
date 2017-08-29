@@ -18,11 +18,15 @@ import java.util.List;
 @Component
 public class RoleUtil {
 
-    @Autowired
-    SysRoleRepository sysRoleRepository;
+    private final SysRoleRepository sysRoleRepository;
+
+    private final SysUserRoleRepository sysUserRoleRepository;
 
     @Autowired
-    SysUserRoleRepository sysUserRoleRepository;
+    public RoleUtil(SysRoleRepository sysRoleRepository, SysUserRoleRepository sysUserRoleRepository) {
+        this.sysRoleRepository = sysRoleRepository;
+        this.sysUserRoleRepository = sysUserRoleRepository;
+    }
 
     public List<String> getRoleNamesByUser(SysUser sysUser) {
 

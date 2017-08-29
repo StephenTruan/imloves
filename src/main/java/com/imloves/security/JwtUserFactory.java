@@ -16,7 +16,7 @@ public final class JwtUserFactory {
     private JwtUserFactory() {
     }
 
-    public static JwtUser create(SysUser sysUser) {
+    static JwtUser create(SysUser sysUser) {
         return new JwtUser(
                 sysUser.getId(),
                 sysUser.getUsername(),

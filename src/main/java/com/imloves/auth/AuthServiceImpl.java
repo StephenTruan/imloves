@@ -25,11 +25,11 @@ import java.util.Collections;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private AuthenticationManager authenticationManager;
-    private UserDetailsService userDetailsService;
-    private JwtTokenUtil jwtTokenUtil;
-    private SysUserRepository sysUserRepository;
-    private JwtAccountConfig jwtAccountConfig;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final SysUserRepository sysUserRepository;
+    private final JwtAccountConfig jwtAccountConfig;
 
     @Autowired
     public AuthServiceImpl(
@@ -67,8 +67,7 @@ public class AuthServiceImpl implements AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        final String token = jwtTokenUtil.generateToken(userDetails);
-        return token;
+        return jwtTokenUtil.generateToken(userDetails);
     }
 
     @Override

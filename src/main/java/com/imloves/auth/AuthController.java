@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/auth")
 public class AuthController {
 
-    private JwtAccountConfig jwtAccountConfig;
+    private final JwtAccountConfig jwtAccountConfig;
 
-    private AuthService authService;
+    private final AuthService authService;
 
-    private SysUserRepository sysUserRepository;
+    private final SysUserRepository sysUserRepository;
 
     @Autowired
     public AuthController(JwtAccountConfig jwtAccountConfig, AuthService authService, SysUserRepository sysUserRepository) {
