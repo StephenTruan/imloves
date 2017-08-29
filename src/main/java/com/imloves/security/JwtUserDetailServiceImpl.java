@@ -24,7 +24,7 @@ public class JwtUserDetailServiceImpl implements UserDetailsService {
 
     private final SysUserRoleRepository sysUserRoleRepository;
 
-    public JwtUserDetailServiceImpl(SysUserRepository sysUserRepository, SysRoleRepository sysRoleRepository, SysUserRoleRepository sysUserRoleRepository) {
+    JwtUserDetailServiceImpl(SysUserRepository sysUserRepository, SysRoleRepository sysRoleRepository, SysUserRoleRepository sysUserRoleRepository) {
         this.sysUserRepository = sysUserRepository;
         this.sysRoleRepository = sysRoleRepository;
         this.sysUserRoleRepository = sysUserRoleRepository;

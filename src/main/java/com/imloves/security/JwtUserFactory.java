@@ -22,7 +22,8 @@ public final class JwtUserFactory {
                 sysUser.getId(),
                 sysUser.getUsername(),
                 sysUser.getPassword(),
-                map2GrantedAuthorities(sysUser.getRoles())
+                map2GrantedAuthorities(sysUser.getRoles()),
+                sysUser.getUpdateTime()
         );
     }
 

@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,21 +26,25 @@ public class SysUser implements Serializable {
     private Integer sex;
     private String city;
     private Integer state;
-    private String createTime;
-    private String updateTime;
+    private Date createTime;
+    private Date updateTime;
     @Transient
     private List<SysRole> roles;
 
     public SysUser() {
     }
 
-    public SysUser(String username, String password, String openId, Integer sex, String city, Integer state) {
+    public SysUser(String openId, String username, String password, String phone, Integer sex, String city, Integer state, Date createTime, Date updateTime, List<SysRole> roles) {
+        this.openId = openId;
         this.username = username;
         this.password = password;
-        this.openId = openId;
+        this.phone = phone;
         this.sex = sex;
         this.city = city;
         this.state = state;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -106,19 +111,19 @@ public class SysUser implements Serializable {
         this.state = state;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public String getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(String updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 

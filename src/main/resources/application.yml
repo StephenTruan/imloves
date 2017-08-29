@@ -4,7 +4,7 @@ wechat:
 
 jwt:
   header: Authorization
-  secret: mySecret
+  secret: 18231926271
   expiration: 604800
   tokenHead: "Bearer "
   route:
