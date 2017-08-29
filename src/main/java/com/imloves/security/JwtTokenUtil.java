@@ -1,10 +1,12 @@
 package com.imloves.security;
 
+import com.imloves.config.JwtAccountConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,18 +17,17 @@ import java.util.Map;
  * Created by wujianchuan
  * 2017/8/28 16:48
  */
-public class JwtTokenUtil implements Serializable{
+
+@Component
+public class JwtTokenUtil implements Serializable {
 
     private static final long serialVersionUID = 3701630514894955317L;
 
     private static final String CLAIM_KEY_USERNAME = "sub";
     private static final String CLAIM_KEY_CREATED = "created";
 
-    @Value("${jwt.secret}")
-    private String secret;
-
-    @Value("{jwt.expiration}")
-    private Long expiration;
+    @Autowired
+    JwtAccountConfig jwtAccountConfig;
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
@@ -61,19 +62,19 @@ public class JwtTokenUtil implements Serializable{
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .signWith(SignatureAlgorithm.HS512, jwtAccountConfig.getSecret())
                 .compact();
     }
 
     private Date generateExpirationDate() {
-        return new Date(System.currentTimeMillis() + expiration * 1000);
+        return new Date(System.currentTimeMillis() + jwtAccountConfig.getExpiration() * 1000);
     }
 
     private Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
             claims = Jwts.parser()
-                    .setSigningKey(secret)
+                    .setSigningKey(jwtAccountConfig.getSecret())
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {

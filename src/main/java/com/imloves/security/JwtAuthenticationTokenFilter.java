@@ -1,5 +1,6 @@
 package com.imloves.security;
 
+import com.imloves.config.JwtAccountConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,19 +34,16 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    @Value("${jwt.header}")
-    private String tokenHeader;
-
-    @Value("${jwt.tokenHead}")
-    private String tokenHead;
+    @Autowired
+    private JwtAccountConfig accountConfig;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String authHeader = request.getHeader(this.tokenHeader);
-        if (authHeader != null && authHeader.startsWith(tokenHead)) {
+        String authHeader = request.getHeader(this.accountConfig.getHeader());
+        if (authHeader != null && authHeader.startsWith(accountConfig.getTokenHead())) {
 
-            final String authToken = authHeader.substring(tokenHead.length());
+            final String authToken = authHeader.substring(accountConfig.getTokenHead().length());
             String username = jwtTokenUtil.getUsernameFromToken(authToken);
             log.info(username);
 
