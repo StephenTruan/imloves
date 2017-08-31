@@ -30,7 +30,7 @@ public class RoleUtil {
 
     public List<String> getRoleNamesByUser(SysUser sysUser) {
 
-        List<SysUserRole> sysUserRoles = sysUserRoleRepository.findSysUserRoleByUserId(sysUser.getId());
+        List<SysUserRole> sysUserRoles = sysUserRoleRepository.findByUserId(sysUser.getId());
         List<Integer> roleIds = new ArrayList<>();
         List<String> roleNames = new ArrayList<>();
         sysUserRoles.forEach(sysUserRole -> roleIds.add(sysUserRole.getRoleId()));

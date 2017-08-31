@@ -15,6 +15,14 @@ public class SysUserRole implements Serializable {
     private Long userId;
     private Integer roleId;
 
+    public SysUserRole() {
+    }
+
+    public SysUserRole(Long userId, Integer roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
+    }
+
     public Long getId() {
         return id;
     }

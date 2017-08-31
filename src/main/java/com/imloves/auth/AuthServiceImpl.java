@@ -2,7 +2,9 @@ package com.imloves.auth;
 
 import com.imloves.config.JwtAccountConfig;
 import com.imloves.model.SysUser;
+import com.imloves.model.SysUserRole;
 import com.imloves.repository.SysUserRepository;
+import com.imloves.repository.SysUserRoleRepository;
 import com.imloves.security.JwtTokenUtil;
 import com.imloves.security.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtTokenUtil jwtTokenUtil;
     private final SysUserRepository sysUserRepository;
     private final JwtAccountConfig jwtAccountConfig;
+    private final SysUserRoleRepository sysUserRoleRepository;
 
     @Autowired
     public AuthServiceImpl(
@@ -37,12 +40,14 @@ public class AuthServiceImpl implements AuthService {
             UserDetailsService userDetailsService,
             JwtTokenUtil jwtTokenUtil,
             SysUserRepository sysUserRepository,
-            JwtAccountConfig jwtAccountConfig) {
+            JwtAccountConfig jwtAccountConfig,
+            SysUserRoleRepository sysUserRoleRepository) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
         this.sysUserRepository = sysUserRepository;
         this.jwtAccountConfig = jwtAccountConfig;
+        this.sysUserRoleRepository = sysUserRoleRepository;
     }
 
     @Override
@@ -55,8 +60,13 @@ public class AuthServiceImpl implements AuthService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         final String password = user.getPassword();
         user.setPassword(encoder.encode(password));
-        user.setRoles(Collections.singletonList("ROLE_USER"));
-        return sysUserRepository.save(user);
+        user.setSex(0);
+        user.setState(1);
+        SysUser sysUser = sysUserRepository.save(user);
+        SysUserRole sysUserRole = new SysUserRole(sysUser.getId(), 1);
+        sysUserRoleRepository.save(sysUserRole);
+
+        return sysUser;
     }
 
     @Override

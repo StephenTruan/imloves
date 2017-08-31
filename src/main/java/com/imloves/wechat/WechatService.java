@@ -1,4 +1,4 @@
-package com.imloves.service;
+package com.imloves.wechat;
 
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 

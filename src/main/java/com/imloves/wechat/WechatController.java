@@ -1,6 +1,5 @@
-package com.imloves.controller;
+package com.imloves.wechat;
 
-import com.imloves.service.WechatService;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -34,7 +33,7 @@ public class WechatController {
     @GetMapping("/authorize")
     public String authorize() {
 
-        String returnUrl = "http://www.yangmb.top";
+        String returnUrl = "http://www.baidu.com";
         String url = "http://imloves.natapp1.cc/wechat/userInfo";
         String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_USER_INFO, URLEncoder.encode(returnUrl));
 

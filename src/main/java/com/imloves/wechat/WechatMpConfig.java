@@ -1,5 +1,6 @@
-package com.imloves.config;
+package com.imloves.wechat;
 
+import com.imloves.config.WechatAccountConfig;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;

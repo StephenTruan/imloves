@@ -1,11 +1,14 @@
-package com.imloves.service;
+package com.imloves.wechat;
 
 import com.imloves.model.SysUser;
 import com.imloves.repository.SysUserRepository;
 import com.imloves.util.EncryptionUtil;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 /**
  * Created by wujianchuan
@@ -23,10 +26,15 @@ public class WechatServiceImpl implements WechatService {
         String openId = wxMpUser.getOpenId();
         SysUser sysUser = sysUserRepository.findByOpenId(openId);
         if (sysUser == null) {
+
             sysUser = new SysUser();
             sysUser.setUsername(wxMpUser.getNickname());
             sysUser.setOpenId(wxMpUser.getOpenId());
-            sysUser.setPassword(EncryptionUtil.enctyption("000000", EncryptionUtil.MD5));
+
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            sysUser.setPassword(encoder.encode("000000"));
+            sysUser.setRoles(Collections.singletonList("ROLE_USER"));
+
             if ("男".equals(wxMpUser.getSex())) {
                 sysUser.setSex(1);
             } else if ("女".equals(wxMpUser.getSex())) {
