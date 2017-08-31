@@ -49,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
     public SysUser register(SysUser user) {
 
         final String username = user.getUsername();
-        if(sysUserRepository.findByUsername(username)!=null){
+        if (sysUserRepository.findByUsername(username) != null) {
             return null;
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -76,7 +76,7 @@ public class AuthServiceImpl implements AuthService {
         final String token = oldToken.substring(jwtAccountConfig.getTokenHead().length());
         String username = jwtTokenUtil.getUsernameFromToken(token);
         JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
-        if (jwtTokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())){
+        if (jwtTokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
             return jwtTokenUtil.refreshToken(token);
         }
         return null;

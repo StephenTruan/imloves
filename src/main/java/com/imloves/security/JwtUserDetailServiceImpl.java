@@ -3,7 +3,6 @@ package com.imloves.security;
 import com.imloves.model.SysUser;
 import com.imloves.repository.SysUserRepository;
 import com.imloves.util.RoleUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
