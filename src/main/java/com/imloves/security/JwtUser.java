@@ -19,20 +19,27 @@ public class JwtUser implements UserDetails {
 
     private final long id;
     private final String username;
+    private final String phone;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
     private final Date lastPasswordResetDate;
 
     public JwtUser(long id,
                    String username,
+                   String phone,
                    String password,
                    Collection<? extends GrantedAuthority> authorities,
                    Date lastPasswordResetDate) {
         this.id = id;
         this.username = username;
+        this.phone = phone;
         this.password = password;
         this.authorities = authorities;
         this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     @Override

@@ -20,6 +20,7 @@ public final class JwtUserFactory {
         return new JwtUser(
                 sysUser.getId(),
                 sysUser.getUsername(),
+                sysUser.getPhone(),
                 sysUser.getPassword(),
                 mapToGrantedAuthorities(sysUser.getRoles()),
                 sysUser.getUpdateTime()

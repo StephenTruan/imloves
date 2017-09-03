@@ -7,17 +7,14 @@ import com.imloves.repository.SysUserRepository;
 import com.imloves.repository.SysUserRoleRepository;
 import com.imloves.security.JwtTokenUtil;
 import com.imloves.security.JwtUser;
+import com.imloves.security.JwtUserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 /**
  * Created by wujianchuan
@@ -28,7 +25,7 @@ import java.util.Collections;
 public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsService userDetailsService;
+    private final JwtUserDetailServiceImpl userDetailsService;
     private final JwtTokenUtil jwtTokenUtil;
     private final SysUserRepository sysUserRepository;
     private final JwtAccountConfig jwtAccountConfig;
@@ -37,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     public AuthServiceImpl(
             AuthenticationManager authenticationManager,
-            UserDetailsService userDetailsService,
+            JwtUserDetailServiceImpl userDetailsService,
             JwtTokenUtil jwtTokenUtil,
             SysUserRepository sysUserRepository,
             JwtAccountConfig jwtAccountConfig,
@@ -76,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
         final Authentication authentication = authenticationManager.authenticate(upToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        final JwtUser userDetails = userDetailsService.loadUserByUsername(username);
         return jwtTokenUtil.generateToken(userDetails);
     }
 
@@ -85,7 +82,7 @@ public class AuthServiceImpl implements AuthService {
 
         final String token = oldToken.substring(jwtAccountConfig.getTokenHead().length());
         String username = jwtTokenUtil.getUsernameFromToken(token);
-        JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+        JwtUser user = userDetailsService.loadUserByUsername(username);
         if (jwtTokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
             return jwtTokenUtil.refreshToken(token);
         }

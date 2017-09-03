@@ -2,8 +2,8 @@ package com.imloves.security;
 
 import com.imloves.model.SysUser;
 import com.imloves.repository.SysUserRepository;
+import com.imloves.util.RegexUtil;
 import com.imloves.util.RoleUtil;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Created by gaowenfeng on 2017/2/5.
+ * Created by wujianchuan
+ * 2017/8/28 17:00
  */
 
 @Service
@@ -21,18 +22,27 @@ public class JwtUserDetailServiceImpl implements UserDetailsService {
 
     private final RoleUtil roleUtil;
 
-    JwtUserDetailServiceImpl(SysUserRepository sysUserRepository, RoleUtil roleUtil) {
+    private final RegexUtil regexUtil;
+
+    JwtUserDetailServiceImpl(SysUserRepository sysUserRepository, RoleUtil roleUtil, RegexUtil regexUtil) {
         this.sysUserRepository = sysUserRepository;
         this.roleUtil = roleUtil;
+        this.regexUtil = regexUtil;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUser user = sysUserRepository.findByUsername(username);
-        if (user == null)
+    public JwtUser loadUserByUsername(String input) throws UsernameNotFoundException {
+
+        SysUser sysUser = null;
+        if (regexUtil.isMobile(input)) {
+            sysUser = sysUserRepository.findByPhone(input);
+        } else if (regexUtil.isEmail(input)) {
+            sysUser = sysUserRepository.findByPhone(input);
+        }
+        if (sysUser == null)
             throw new UsernameNotFoundException("用户名不存在");
-        List<String> roleNames = roleUtil.getRoleNamesByUser(user);
-        user.setRoles(roleNames);
-        return JwtUserFactory.create(user);
+        List<String> roleNames = roleUtil.getRoleNamesByUser(sysUser);
+        sysUser.setRoles(roleNames);
+        return JwtUserFactory.create(sysUser);
     }
 }

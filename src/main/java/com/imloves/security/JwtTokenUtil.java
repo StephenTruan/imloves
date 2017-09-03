@@ -29,9 +29,9 @@ public class JwtTokenUtil implements Serializable {
     @Autowired
     JwtAccountConfig jwtAccountConfig;
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(JwtUser userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
+        claims.put(CLAIM_KEY_USERNAME, userDetails.getPhone());
         claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
     }
@@ -53,7 +53,7 @@ public class JwtTokenUtil implements Serializable {
         final String username = getUsernameFromToken(token);
         final Date created = getCreatedDateFromToken(token);
         return (
-                username.equals(user.getUsername())
+                username.equals(user.getPhone())
                         && !isTokenExpired(token)
                         && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate()));
     }

@@ -1,7 +1,5 @@
 package com.imloves.security;
 
-import com.imloves.repository.SysUserRepository;
-import com.imloves.util.RoleUtil;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -30,12 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DataSource dataSource;
-
-    @Autowired
-    SysUserRepository sysUserRepository;
-
-    @Autowired
-    RoleUtil roleUtil;
 
     @Bean
     public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
