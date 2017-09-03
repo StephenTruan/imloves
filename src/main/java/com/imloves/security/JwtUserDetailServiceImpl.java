@@ -22,25 +22,17 @@ public class JwtUserDetailServiceImpl implements UserDetailsService {
 
     private final RoleUtil roleUtil;
 
-    private final RegexUtil regexUtil;
-
-    JwtUserDetailServiceImpl(SysUserRepository sysUserRepository, RoleUtil roleUtil, RegexUtil regexUtil) {
+    JwtUserDetailServiceImpl(SysUserRepository sysUserRepository, RoleUtil roleUtil) {
         this.sysUserRepository = sysUserRepository;
         this.roleUtil = roleUtil;
-        this.regexUtil = regexUtil;
     }
 
     @Override
     public JwtUser loadUserByUsername(String input) throws UsernameNotFoundException {
 
-        SysUser sysUser = null;
-        if (regexUtil.isMobile(input)) {
-            sysUser = sysUserRepository.findByPhone(input);
-        } else if (regexUtil.isEmail(input)) {
-            sysUser = sysUserRepository.findByPhone(input);
-        }
+        SysUser sysUser = sysUserRepository.findByPhone(input);
         if (sysUser == null)
-            throw new UsernameNotFoundException("用户名不存在");
+            throw new UsernameNotFoundException("用户不存在");
         List<String> roleNames = roleUtil.getRoleNamesByUser(sysUser);
         sysUser.setRoles(roleNames);
         return JwtUserFactory.create(sysUser);

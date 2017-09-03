@@ -33,10 +33,9 @@ public class WechatController {
     @GetMapping("/authorize")
     public String authorize() {
 
-        String returnUrl = "http://www.baidu.com";
+        String returnUrl = "http://imloves.natapp1.cc/wechat/userInfo/home";
         String url = "http://imloves.natapp1.cc/wechat/userInfo";
         String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_USER_INFO, URLEncoder.encode(returnUrl));
-
         return "redirect:" + redirectUrl;
     }
 
@@ -45,7 +44,6 @@ public class WechatController {
                           @RequestParam("state") String returnUrl) {
 
         try {
-
             WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
             WxMpUser wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
             wechatService.wechatCustomerPersist(wxMpUser);
@@ -53,7 +51,6 @@ public class WechatController {
             log.error("【微信网页授权】{}", e);
             e.printStackTrace();
         }
-
         return "redirect:" + returnUrl;
     }
 }
