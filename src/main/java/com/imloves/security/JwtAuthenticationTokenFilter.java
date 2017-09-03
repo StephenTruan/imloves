@@ -43,19 +43,19 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith(accountConfig.getTokenHead())) {
 
             final String authToken = authHeader.substring(accountConfig.getTokenHead().length());
-            String username = jwtTokenUtil.getUsernameFromToken(authToken);
-            log.info(username);
+            String phone = jwtTokenUtil.getUsernameFromToken(authToken);
+            log.info(phone);
 
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (phone != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(phone);
 
                 if (jwtTokenUtil.validateToken(authToken, userDetails)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(
                             request));
-                    log.info("authenticated user " + username + ", setting security context");
+                    log.info("authenticated user " + phone + ", setting security context");
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }

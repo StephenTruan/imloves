@@ -50,8 +50,8 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public SysUser register(SysUser user) {
 
-        final String username = user.getUsername();
-        if (sysUserRepository.findByUsername(username) != null) {
+        final String phone = user.getPhone();
+        if (sysUserRepository.findByPhone(phone) != null) {
             return null;
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -62,7 +62,6 @@ public class AuthServiceImpl implements AuthService {
         SysUser sysUser = sysUserRepository.save(user);
         SysUserRole sysUserRole = new SysUserRole(sysUser.getId(), 1);
         sysUserRoleRepository.save(sysUserRole);
-
         return sysUser;
     }
 
