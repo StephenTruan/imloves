@@ -1,8 +1,9 @@
 package com.imloves.wechat;
 
 import com.imloves.model.SysUser;
+import com.imloves.model.SysUserRole;
 import com.imloves.repository.SysUserRepository;
-import com.imloves.util.EncryptionUtil;
+import com.imloves.repository.SysUserRoleRepository;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,9 @@ public class WechatServiceImpl implements WechatService {
     @Autowired
     SysUserRepository sysUserRepository;
 
+    @Autowired
+    SysUserRoleRepository sysUserRoleRepository;
+
     @Override
     public void wechatCustomerPersist(WxMpUser wxMpUser) {
 
@@ -34,7 +38,6 @@ public class WechatServiceImpl implements WechatService {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             sysUser.setPassword(encoder.encode("000000"));
             sysUser.setRoles(Collections.singletonList("ROLE_USER"));
-
             if ("男".equals(wxMpUser.getSex())) {
                 sysUser.setSex(1);
             } else if ("女".equals(wxMpUser.getSex())) {
@@ -43,6 +46,9 @@ public class WechatServiceImpl implements WechatService {
             sysUser.setState(1);
             sysUser.setCity(wxMpUser.getCity());
             sysUserRepository.save(sysUser);
+
+            SysUserRole sysUserRole = new SysUserRole(sysUser.getId(), 1);
+            sysUserRoleRepository.save(sysUserRole);
         }
     }
 }

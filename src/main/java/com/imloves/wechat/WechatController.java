@@ -1,5 +1,9 @@
 package com.imloves.wechat;
 
+import com.imloves.auth.Auth;
+import com.imloves.auth.AuthService;
+import com.imloves.model.SysUser;
+import com.imloves.repository.SysUserRepository;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -30,6 +34,12 @@ public class WechatController {
     @Autowired
     private WechatService wechatService;
 
+    @Autowired
+    private AuthService authService;
+
+    @Autowired
+    private SysUserRepository sysUserRepository;
+
     @GetMapping("/authorize")
     public String authorize() {
 
@@ -40,17 +50,24 @@ public class WechatController {
     }
 
     @GetMapping("/userInfo")
-    public String userIfo(@RequestParam("code") String code,
-                          @RequestParam("state") String returnUrl) {
+    public Auth userIfo(@RequestParam("code") String code,
+                        @RequestParam("state") String returnUrl) {
 
+        WxMpUser wxMpUser = null;
         try {
             WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
-            WxMpUser wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
+            wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
             wechatService.wechatCustomerPersist(wxMpUser);
         } catch (WxErrorException e) {
             log.error("【微信网页授权】{}", e);
             e.printStackTrace();
         }
-        return "redirect:" + returnUrl;
+        if (wxMpUser != null) {
+            SysUser sysUser = sysUserRepository.findByOpenId(wxMpUser.getOpenId());
+            final String token = authService.login(sysUser.getOpenId(), sysUser.getPassword());
+            return new Auth(token, sysUser);
+        } else {
+            return null;
+        }
     }
 }

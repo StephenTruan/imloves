@@ -45,7 +45,7 @@ public class AuthController {
             @RequestBody JwtAuthenticationRequest authenticationRequest) throws AuthenticationException {
 
         final String token = authService.login(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-        final SysUser user = sysUserRepository.findByUsername(authenticationRequest.getUsername());
+        final SysUser user = sysUserRepository.findByPhone(authenticationRequest.getUsername());
         return new Auth(token, user);
     }
 
