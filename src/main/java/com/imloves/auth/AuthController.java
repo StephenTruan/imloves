@@ -44,17 +44,17 @@ public class AuthController {
     public Auth createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest) throws AuthenticationException {
 
-        final String token = authService.login(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-        final SysUser user = sysUserRepository.findByPhone(authenticationRequest.getUsername());
+        final String token = authService.login(authenticationRequest.getPhone(), authenticationRequest.getPassword());
+        final SysUser user = sysUserRepository.findByPhone(authenticationRequest.getPhone());
         return new Auth(token, user);
     }
 
     @GetMapping(value = "/refresh")
     public ResponseEntity<?> refreshAndGetAuthenticationToken(
-            HttpServletRequest request) throws AuthenticationException{
+            HttpServletRequest request) throws AuthenticationException {
         String token = request.getHeader(jwtAccountConfig.getTokenHead());
         String refreshedToken = authService.refresh(token);
-        if(refreshedToken == null) {
+        if (refreshedToken == null) {
             return ResponseEntity.badRequest().body(null);
         } else {
             return ResponseEntity.ok(new JwtAuthenticationResponse(refreshedToken));

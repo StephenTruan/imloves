@@ -66,13 +66,13 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(String username, String password) {
+    public String login(String phone, String password) {
 
-        UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
+        UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(phone, password);
         final Authentication authentication = authenticationManager.authenticate(upToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        final JwtUser userDetails = userDetailsService.loadUserByUsername(username);
+        final JwtUser userDetails = userDetailsService.loadUserByUsername(phone);
         return jwtTokenUtil.generateToken(userDetails);
     }
 
