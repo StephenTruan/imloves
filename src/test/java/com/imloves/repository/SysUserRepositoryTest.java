@@ -1,5 +1,6 @@
 package com.imloves.repository;
 
+import com.imloves.model.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,5 +30,13 @@ public class SysUserRepositoryTest {
     public void findByPhone() throws Exception {
 
         log.info(String.valueOf(sysUserRepository.findByPhone("18231926271")));
+    }
+
+    @Test
+    public void update() {
+
+        SysUser sysUser = sysUserRepository.findByPhone("13231525261");
+        sysUser.setSex(2);
+        sysUserRepository.save(sysUser);
     }
 }
