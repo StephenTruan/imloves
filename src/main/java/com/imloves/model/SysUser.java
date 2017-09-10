@@ -3,6 +3,7 @@ package com.imloves.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -15,8 +16,9 @@ import java.util.List;
  * 2017/8/17 21:26
  */
 @Entity
-@Data
 @DynamicUpdate
+@DynamicInsert
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SysUser implements Serializable {
@@ -32,9 +34,7 @@ public class SysUser implements Serializable {
     private Integer sex;
     private String city;
     private Integer state;
-    @Column(insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createTime;
-    @Column(insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Date updateTime;
     @Transient
     private List<String> roles;

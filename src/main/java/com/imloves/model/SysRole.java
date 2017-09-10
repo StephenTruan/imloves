@@ -3,6 +3,7 @@ package com.imloves.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
@@ -15,8 +16,9 @@ import java.io.Serializable;
  * 2017/8/19 22:02
  */
 @Entity
-@Data
 @DynamicUpdate
+@DynamicInsert
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SysRole implements Serializable {

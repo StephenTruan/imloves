@@ -35,7 +35,7 @@ public class SysUserRepositoryTest {
     @Test
     public void update() {
 
-        SysUser sysUser = sysUserRepository.findByPhone("13231525261");
+        SysUser sysUser = sysUserRepository.findByPhone("13231525262");
         sysUser.setSex(2);
         sysUserRepository.save(sysUser);
     }
